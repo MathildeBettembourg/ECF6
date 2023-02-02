@@ -123,15 +123,11 @@ export const InputVehicule = (props) => {
                 "defaultValue": "" || newVehicule.immatriculation
             }
         ]
-    /**
-     * HandleAjout appel la fonction de la page qui gere tous les affichages et appel api
-     * @param newVehicule de type vehicule
-     */
+
     /**
      * HandleAjout est la onction pour ajouter une voiture en base de données
      * @param newVehicule de type vehicule
      */
-
     const handleAjout = () => {
         props.handleAjout(newVehicule)
     }

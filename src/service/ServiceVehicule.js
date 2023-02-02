@@ -46,6 +46,15 @@ export class ServiceVehicule{
                 body: JSON.stringify(vehicule)})
             .then(res=> res.json())
     }
+    async modifierVehicule(vehicule, id){
+        return await fetch(`http://localhost:8080/vehicules/${id}`,
+            {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(vehicule)
+            })
+            .then(response => response.json())
+    }
 
 
 }

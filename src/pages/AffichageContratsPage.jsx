@@ -69,23 +69,36 @@ export const AffichageContratsPage = () => {
     }, [])
 
     /**
-     * UseEffect qui recupere tous les vehicules en base de données et les
+     * UseEffect qui recupere tous les vehicules en base de données et les les enregistre dans n state
      */
     useEffect(()=>{
         serviceVehicule.getVehicule().then((res)=> setListVehicules(res))
     }, [])
-
+    /**
+     * Recuperation de tous les locataires en base de données, et les enregistre dans un state
+     */
     useEffect(()=>{
         serviceLocataire.getLocataires().then((res)=> setListLocataires(res))
     }, [])
 
-
+    /**
+     * HandleAjout est une fonction qui permet d'ajouter un contrat en base de donnée
+     * @param newContrat
+     */
     const handleAjout=(newContrat)=>{
         serviceContrats.ajouterContrat(newContrat)
     }
+    /**
+     * setSelectLocataire permet d'enregistrer le locataire selectionné dans le state
+     * @param value
+     */
     const setSelectLocataires=(value)=>{
         setSelectLocataire(value)
     }
+    /**
+     * Ici on set le vehicule selectoonné dans un state
+     * @param value
+     */
     const setSelectVehicules=(value)=>{
         setSelectVehicule(value)
     }

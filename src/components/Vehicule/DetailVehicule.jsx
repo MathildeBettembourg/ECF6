@@ -28,7 +28,9 @@ export const DetailVehicule = () => {
             "marque": "",
             "immatriculation": "",
         })
-
+    /**
+     * Useeffect permet de recuperer le vehicule choisis et de l'afficher par la suite
+     */
     useEffect(() => {
         serviceVehicule.getVehiculeById(id).then((res) => setDetailObjectVehicule(res))
     }, [id])

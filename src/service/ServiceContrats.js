@@ -42,5 +42,6 @@ export class ServiceContrats{
             .then(res=> res.json())
     }
 
+
 }
 export const serviceContrats = Object(new ServiceContrats())
