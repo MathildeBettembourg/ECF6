@@ -19,6 +19,7 @@ export const InputContrat = (props) => {
     const [dateDisVal, setdateDisVal]=useState(true)
     const [dateDis, setDateDis]=useState(true)
     const[disSelect, setDisSelect]=useState(false)
+    const[valDisTT, setValDisTT]=useState(true)
     //newLocataire initialisé à vide car, pas de typage en js.
     const [newContrat, setNewContrat] = useState(
         {
@@ -67,8 +68,11 @@ export const InputContrat = (props) => {
      *      @param value
      */
     const [dissabledchoixLocVeh, setDisabledchoixLocVeh] = useState(false)
+
     /**
-     *
+     *HandleChangeLocataireEtVehicule est une fonction qui s'active une fois le locataire et le vehicule choisis,
+     * elle permet de setter l'id du locataire et du vehicule dans l'objet nouvelle location,
+     * en même temps elle permet à l'utilisateur d'acceder à l'étape suivante de la réservation
      */
     const handleChangeLocataireEtVehicule = () => {
         setNewContrat({
@@ -82,20 +86,22 @@ export const InputContrat = (props) => {
     }
 
     /**
-     *   HandleChangeValeur
+     *   HandleChangeStart
      *      Fonction liées aux input,
      *      elle recupèrent la valeur de l'entrée d'un input générique
      *      et implemente les valeurs des attribut d'un nouvel objet.
+     *      Ici on change la date de debut de la location
      *      @param value
      */
     const handleChangeStart = (event) => {
         setNewContrat({...newContrat, fullstart: event.target.value})
     }
     /**
-     *   HandleChangeValeur
+     *   HandleChangeEnd
      *      Fonction liées aux input,
      *      elle recupèrent la valeur de l'entrée d'un input générique
      *      et implemente les valeurs des attribut d'un nouvel objet.
+     *      Ici on set la fin de location
      *      @param value
      */
     const handleChangeEnd = (event) => {
@@ -103,7 +109,7 @@ export const InputContrat = (props) => {
     }
     /**
      * HandleChangeLocataire est une fonction qui permet de selectionner un
-     * locataire et de l'enregistrer
+     * locataire et de l'enregistrer dans le parent, il va servir pour recuperer des informations par la suite
      * @param event
      */
     const handleChangeLocataire = (event) => {
@@ -118,30 +124,43 @@ export const InputContrat = (props) => {
         props.setSelectVehicule(event.target.value)
     }
     /**
-     * HandleAjout est la onction pour ajouter un locataire en base de données
-     * @param newLocataire de type locataire
+     * HandleAjout est la fonction pour ajouter un onstrat en base de données
+     * @param newContrat de type location
      */
     const handleAjout = () => {
         props.handleAjout(newContrat)
     }
 
+    /**
+     * Gestion affichage handle checklock permet de disable le choix du locataire et de rendre accessible le choix du vehicule
+     */
     const handleCheckLoc = () => {
         setCheckLoc(true)
         setCheckVeh(false)
     }
-
+    /**
+     * Gestion de laffichage, elle permet de rendre le select du vehicule inaccessible,
+     * et permet de rendre le bouton de validation accessible et de meme les date par la suite
+     */
     const handleCheckVeh = () => {
         setCheckVeh(true)
         setdateDisVal(false)
     }
 
+    /**
+     * HandleCheckValidationDates est une fonction qui permet de gere le front;
+     * elle permet de rendre les input dates disables et permet d'acceder a la suite de la validation de la réservation
+     */
     const handleValidationDates =()=>{
         setDateDis(true)
         setdateDisVal(true)
+        setValDisTT(false)
+
         if(newContrat.fullend<newContrat.fullstart){
             alert("La date du début doit être AVANT la date de fin !")
             setDateDis(false)
             setdateDisVal(false)
+            setValDisTT(true)
         }else{
             //console.log(((((new Date(newContrat.fullend)).getTime()) - (new Date(newContrat.fullstart)).getTime())/(1000*3600*24))+1 )
             setNewContrat({...newContrat,
@@ -149,6 +168,12 @@ export const InputContrat = (props) => {
                 prixLocation: ((props.selectVehicule.prix)*(((((new Date(newContrat.fullend)).getTime()) - (new Date(newContrat.fullstart)).getTime())/(1000*3600*24))+1))})
         }
     }
+    /**
+     * HandleChangeInfo est une fonction qui permet de remettre tout l'affichage à 0 en quelque sorte
+     * et de fait de modifier a nouveau si besoin des informations
+     * pour la location
+     * cel n'efface en rienles données deja settées !
+     */
     const handleChangeInfo=()=>{
        setDateDis(false)
         setCheckLoc(false)
@@ -220,7 +245,7 @@ export const InputContrat = (props) => {
                 {dateDis==false?
                     <IonButton onClick={handleValidationDates}>Valider les Dates</IonButton>:
                         <IonButton onClick={handleChangeInfo}>Changer Les Informations</IonButton>}
-                <IonButton color="success" expand="block" onClick={handleAjout}>Créer la réservation </IonButton>
+                <IonButton color="success" expand="block" disabled={valDisTT} onClick={handleAjout}>Créer la réservation </IonButton>
             </IonList>
 
 
