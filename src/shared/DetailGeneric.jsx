@@ -6,7 +6,7 @@ import {
     IonCardTitle,
     IonContent,
     IonHeader,
-    IonPage,
+    IonPage, IonText,
     IonTitle,
     IonToolbar
 } from "@ionic/react";
@@ -47,26 +47,21 @@ export const DetailGeneric = () => {
                             <IonTitle size="large">Details</IonTitle>
                         </IonToolbar>
                     </IonHeader>
-                    {detailObjectVehicule && detailObjectVehicule.map((i, index) => {
-                        return (
-                            <>
-                                <IonCard>
-                                    <img alt="Silhouette of mountains"
-                                         src="https://ionicframework.com/docs/img/demos/card-media.png"/>
-                                    <IonCardHeader>
-                                        <IonCardTitle>Card Title</IonCardTitle>
-                                        <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
-                                    </IonCardHeader>
-                                    <IonCardContent>
-                                        Here's a small text description for the card content. Nothing more, nothing
-                                        less.
-                                    </IonCardContent>
-                                </IonCard>
-                                );
-                            </>
-
-                        )
-                    })
+                    {detailObjectVehicule &&
+                        <IonCard>
+                            <img alt="Silhouette of mountains"
+                                 src="https://ionicframework.com/docs/img/demos/card-media.png"/>
+                            <IonCardHeader>
+                                <IonCardTitle>{detailObjectVehicule.marque}</IonCardTitle>
+                                <IonCardSubtitle>{detailObjectVehicule.disponibilite}</IonCardSubtitle>
+                            </IonCardHeader>
+                            <IonCardContent>
+                               <IonText>Prix/jours : {detailObjectVehicule.prix}</IonText><hr/>
+                                <IonText> Modele : {detailObjectVehicule.modele}</IonText><hr/>
+                                <IonText>Etat : {(detailObjectVehicule.etat)=="A"? "Très Bon":"B"? "Bon":"C"?"Moyen":"D"?"Mauvais":"P"?"Panne":"Non communiqué"}</IonText><hr/>
+                                <IonText>Immatriculation : {detailObjectVehicule.immatriculation}</IonText>
+                            </IonCardContent>
+                        </IonCard>
                     }
                 </IonContent>
             </IonPage>

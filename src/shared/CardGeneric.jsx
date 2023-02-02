@@ -9,6 +9,9 @@ import {
 } from '@ionic/react';
 import {Fragment} from "react";
 export const CardGeneric=(props)=>{
+    const deleteById=()=>{
+        props.deleteById(props.id)
+    }
 
 
 return(<>
@@ -34,7 +37,7 @@ return(<>
                         </IonAccordion>
                     </IonAccordionGroup>
                    <IonButton routerLink={`/Details/${props.id}`}>Tous les détails</IonButton>
-                    <IonButton>Supprimer</IonButton>
+                    <IonButton onClick={deleteById}>Supprimer</IonButton>
                     <IonButton>Modifier</IonButton>
                 </IonCardContent>
 

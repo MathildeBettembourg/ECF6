@@ -9,7 +9,7 @@ export const SelectGeneric=(props)=>{
 
     return (
         <>
-            <IonList>
+
                 <IonItem>
                     <IonSelect interface="popover" placeholder={props.placeholder} onIonChange={handleChange}>
                         {props.itemSelect && props.itemSelect.map((i, index)=> {
@@ -21,7 +21,7 @@ export const SelectGeneric=(props)=>{
                         }
                     </IonSelect>
                 </IonItem>
-            </IonList>
+
         </>
     )
 }

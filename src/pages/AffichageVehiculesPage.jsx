@@ -1,11 +1,21 @@
-import React, {Fragment, useEffect, useState} from "react";
+import React, {Fragment, useEffect, useRef, useState} from "react";
 import {serviceVehicule} from "../service/ServiceVehicule";
-import {IonCard} from "@ionic/react";
+import {IonButton, IonCard, IonContent, IonItem, IonList, IonModal} from "@ionic/react";
 import CardGeneric from "../shared/CardGeneric";
 import SelectGeneric from "../shared/SelectGeneric";
+import InputVehicule from "../components/Vehicule/InputVehicule";
 
 
 export const AffichageVehiculesPage = () => {
+    const modal = useRef(null);
+    /**
+     * DELETEBYID est une fonction pour supprimer les vehicules par leur id
+     * @param id
+     */
+    const deleteById=(id)=>{
+        serviceVehicule.deleteVehiculeById(id)
+    }
+
 
     //Liste de vehicule, initialisée ici car js, cela simplifie l'affichage
     const [listVehicules, setListVehicules] = useState(
@@ -30,7 +40,7 @@ export const AffichageVehiculesPage = () => {
      */
     useEffect(() => {
         serviceVehicule.getVehicule().then((res) => setListVehicules(res))
-    }, [setVisibilité])
+    }, [setVisibilité, deleteById])
 
     /**
      * DeleteVehicule est une fonction qui prend en parametre l'id d'un vehicule,
@@ -45,7 +55,7 @@ export const AffichageVehiculesPage = () => {
      * Setting de la valeur du filtre qui est liée au select generique
      * qui gere le changement de valeur  de "value",
      * et donc de visibiité des voitures
-     * @param value
+     * @param value de type text
      */
     const handleChangeDispoVisibilite = (value) => {
         setVisibilité(value)
@@ -54,10 +64,29 @@ export const AffichageVehiculesPage = () => {
         {"leg": "Disponible", "value": false},
         {"leg": "louée", "value": true},
         {"leg": "Tous", "value": ""}
-
     ]
+
+    /**
+     * HandleAjout est la onction pour ajouter une voiture en base de données
+     * @param newVehicule de type vehicule
+     */
+    const handleAjout=(newVehicule)=>{
+        serviceVehicule.ajouterVehicule(newVehicule)
+    }
+
     return (
         <>
+                <IonButton id="open-modal" expand="block">
+            Ajouter une Voiture
+                </IonButton>
+                <IonModal ref={modal} trigger="open-modal" initialBreakpoint={0.75} breakpoints={[0, 0.5, 0.75,1]}>
+                    <IonContent className="ion-padding">
+
+
+                                <InputVehicule handleAjout={handleAjout}/>
+
+                    </IonContent>
+                </IonModal>
             <SelectGeneric placeholder={'disponibilité'}
                            handleChange={handleChangeDispoVisibilite}
                            itemSelect={itemSelect}
@@ -71,6 +100,7 @@ export const AffichageVehiculesPage = () => {
                             <IonCard>
                                 <CardGeneric i={i}
                                              titre={i.modele}
+                                             deleteById={deleteById}
                                              ssTitre={i.immatriculation}
                                              id={i.id}
                                              itemList={[
