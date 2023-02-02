@@ -149,7 +149,7 @@ export const InputVehicule = (props) => {
                 })}
                 <SelectGeneric placeholder={"Etat"} itemSelect={selectEtat} handleChange={handleChangeEtat}/>
                 <SelectGeneric placeholder={"Disponibilité"} itemSelect={selectDispo} handleChange={handleChangeDispo}/>
-                <IonButton onClick={handleAjout}>Ajouter</IonButton>
+                <IonButton expand="block" color="secondary" onClick={handleAjout}>Ajouter</IonButton>
             </IonList>
 
         </>)

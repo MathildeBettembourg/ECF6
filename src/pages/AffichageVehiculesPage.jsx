@@ -61,8 +61,8 @@ export const AffichageVehiculesPage = () => {
         setVisibilité(value)
     }
     const itemSelect = [
-        {"leg": "Disponible", "value": false},
-        {"leg": "Louée", "value": true},
+        {"leg": "Disponibles", "value": false},
+        {"leg": "Loués", "value": true},
         {"leg": "Tous", "value": ""}
     ]
 
@@ -76,7 +76,7 @@ export const AffichageVehiculesPage = () => {
 console.log("test")
     return (
         <>
-                <IonButton id="open-modal" expand="block">
+                <IonButton id="open-modal" expand="block" color="secondary" >
             Ajouter une Voiture
                 </IonButton>
                 <IonModal ref={modal} trigger="open-modal" initialBreakpoint={0.75} breakpoints={[0, 0.5, 0.75,1]}>
@@ -87,7 +87,7 @@ console.log("test")
 
                     </IonContent>
                 </IonModal>
-            <SelectGeneric placeholder={'Louées'}
+            <SelectGeneric placeholder={'Loués'}
                            handleChange={handleChangeDispoVisibilite}
                            itemSelect={itemSelect}
             />

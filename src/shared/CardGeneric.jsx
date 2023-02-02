@@ -43,9 +43,17 @@ export const CardGeneric = (props) => {
                 </IonAccordion>
             </IonAccordionGroup>
             {props.type == 2 ?
-                <IonButton routerLink={`/DetailVehicule/${props.id}`}>Détails du Véhicule</IonButton>
+                <IonButton routerLink={`/DetailVehicule/${props.id}`}
+                           color="secondary"
+                           expand="block">
+                    Détails du Véhicule
+                </IonButton>
                 :
-                <IonButton routerLink={`/DetailLocataires/${props.id}`}>Détails du Locataire</IonButton>
+                <IonButton routerLink={`/DetailLocataires/${props.id}`}
+                           color="success"
+                           expand="block">
+                    Détails du Locataire
+                </IonButton>
             }
             <IonButton onClick={deleteById}>Supprimer</IonButton>
             <IonButton>Modifier</IonButton>

@@ -5,10 +5,11 @@ import CardGeneric from "../shared/CardGeneric";
 import SelectGeneric from "../shared/SelectGeneric";
 import InputVehicule from "../components/Vehicule/InputVehicule";
 import {serviceLocataire} from "../service/ServiceLocataire";
+import InputLocataire from "../components/Locataires/InputLocataire";
 
 
 export const AffichageLocatairesPages = () => {
-    const modal = useRef(null);
+    const modal2 = useRef(null);
     /**
      * DELETEBYID est une fonction pour supprimer les vehicules par leur id
      * @param id
@@ -72,15 +73,12 @@ export const AffichageLocatairesPages = () => {
 
     return (
         <>
-            <IonButton id="open-modal" expand="block">
+            <IonButton id="open-modal2" expand="block" color="success">
                 Ajouter un Locataire
             </IonButton>
-            <IonModal ref={modal} trigger="open-modal" initialBreakpoint={0.75} breakpoints={[0, 0.5, 0.75,1]}>
+            <IonModal ref={modal2} trigger="open-modal2" initialBreakpoint={0.75} breakpoints={[0, 0.5, 0.75,1]}>
                 <IonContent className="ion-padding">
-
-
-                    <InputVehicule handleAjout={handleAjout}/>
-
+                    <InputLocataire handleAjout={handleAjout}/>
                 </IonContent>
             </IonModal>
 
