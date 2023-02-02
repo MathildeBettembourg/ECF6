@@ -79,7 +79,6 @@ export const AffichageContratsPage = () => {
 
     const handleAjout=(newContrat)=>{
         serviceContrats.ajouterContrat(newContrat)
-
     }
     const setSelectLocataires=(value)=>{
         setSelectLocataire(value)

@@ -1,9 +1,24 @@
 import React, {Fragment, useState} from "react";
-import {IonButton, IonIcon, IonItem, IonList, IonSelect, IonSelectOption} from "@ionic/react";
+import {
+    IonButton,
+    IonIcon,
+    IonInput,
+    IonItem,
+    IonItemGroup,
+    IonLabel,
+    IonList,
+    IonSelect,
+    IonSelectOption
+} from "@ionic/react";
 import InputGeneric from "../../shared/InputGeneric";
 import {checkmark, closeOutline} from "ionicons/icons";
 
 export const InputContrat = (props) => {
+    const [checkLoc, setCheckLoc] = useState(false)
+    const [checkVeh, setCheckVeh] = useState(true)
+    const [dateDisVal, setdateDisVal]=useState(true)
+    const [dateDis, setDateDis]=useState(true)
+    const[disSelect, setDisSelect]=useState(false)
     //newLocataire initialisé à vide car, pas de typage en js.
     const [newContrat, setNewContrat] = useState(
         {
@@ -51,7 +66,10 @@ export const InputContrat = (props) => {
      *      et implemente les valeurs des attribut d'un nouvel objet.
      *      @param value
      */
-    const [dissabledchoixLocVeh, setDisabledchoixLocVeh]=useState(false)
+    const [dissabledchoixLocVeh, setDisabledchoixLocVeh] = useState(false)
+    /**
+     *
+     */
     const handleChangeLocataireEtVehicule = () => {
         setNewContrat({
                 ...newContrat,
@@ -60,6 +78,7 @@ export const InputContrat = (props) => {
             }
         )
         setDisabledchoixLocVeh(true)
+        setDateDis(false)
     }
 
     /**
@@ -69,8 +88,8 @@ export const InputContrat = (props) => {
      *      et implemente les valeurs des attribut d'un nouvel objet.
      *      @param value
      */
-    const handleChangeStart = (value) => {
-        setNewContrat({...newContrat, fullstart: value})
+    const handleChangeStart = (event) => {
+        setNewContrat({...newContrat, fullstart: event.target.value})
     }
     /**
      *   HandleChangeValeur
@@ -79,47 +98,72 @@ export const InputContrat = (props) => {
      *      et implemente les valeurs des attribut d'un nouvel objet.
      *      @param value
      */
-    const handleChangeEnd = (value) => {
-        setNewContrat({...newContrat, fullend: value})
+    const handleChangeEnd = (event) => {
+        setNewContrat({...newContrat, fullend: event.target.value})
     }
     /**
      * HandleChangeLocataire est une fonction qui permet de selectionner un
      * locataire et de l'enregistrer
      * @param event
      */
-    const handleChangeLocataire=(event)=>{
+    const handleChangeLocataire = (event) => {
         props.setSelectLocataire(event.target.value)
-}
+    }
     /***
      * HandleChangeVehicule est une fonction qui permet
      * de selectionner le vehicule
      * @param event
      */
-    const handleChangeVehicule=(event)=>{
+    const handleChangeVehicule = (event) => {
         props.setSelectVehicule(event.target.value)
-}
+    }
     /**
      * HandleAjout est la onction pour ajouter un locataire en base de données
      * @param newLocataire de type locataire
      */
     const handleAjout = () => {
-        console.log(newContrat)
-        // props.handleAjout(newLocataire)
+        props.handleAjout(newContrat)
     }
-const [checkLoc, setCheckLoc]=useState(false)
-    const handleCheckLoc=()=>{
+
+    const handleCheckLoc = () => {
         setCheckLoc(true)
+        setCheckVeh(false)
     }
-    const [checkVeh, setCheckVeh]=useState(false)
-    const handleCheckVeh=()=>{
+
+    const handleCheckVeh = () => {
         setCheckVeh(true)
+        setdateDisVal(false)
+    }
+
+    const handleValidationDates =()=>{
+        setDateDis(true)
+        setdateDisVal(true)
+        if(newContrat.fullend<newContrat.fullstart){
+            alert("La date du début doit être AVANT la date de fin !")
+            setDateDis(false)
+            setdateDisVal(false)
+        }else{
+            //console.log(((((new Date(newContrat.fullend)).getTime()) - (new Date(newContrat.fullstart)).getTime())/(1000*3600*24))+1 )
+            setNewContrat({...newContrat,
+                prix:props.selectVehicule.prix,
+                prixLocation: ((props.selectVehicule.prix)*(((((new Date(newContrat.fullend)).getTime()) - (new Date(newContrat.fullstart)).getTime())/(1000*3600*24))+1))})
+        }
+    }
+    const handleChangeInfo=()=>{
+       setDateDis(false)
+        setCheckLoc(false)
+       setCheckVeh(true)
+        setdateDisVal(true)
+        setDateDis(true)
+        setDisSelect(false)
+        setDisabledchoixLocVeh(false)
     }
     return (
         <>
             <IonList>
 
-                <IonItem>
-                    <IonSelect placeholder="Locataire" onIonChange={handleChangeLocataire} disabled={checkLoc} >
+                <IonItem disabled={disSelect}>
+                    <IonSelect placeholder="Locataire" onIonChange={handleChangeLocataire} disabled={checkLoc}>
                         {props.listLocataires && props.listLocataires.map((i, index) => {
                             return (
                                 <Fragment key={index}>
@@ -129,35 +173,54 @@ const [checkLoc, setCheckLoc]=useState(false)
                         }
 
                     </IonSelect>
-                    <IonButton onClick={handleCheckLoc}  color="success">
+                    <IonButton onClick={handleCheckLoc} color="success">
                         <IonIcon slot="icon-only" icon={checkmark}></IonIcon>
                     </IonButton>
-                    <IonButton onClick={()=> setCheckLoc(false)}  color="danger">
+                    <IonButton onClick={() => setCheckLoc(false)} color="danger">
                         <IonIcon slot="icon-only" icon={closeOutline}></IonIcon>
                     </IonButton>
                 </IonItem>
 
-                <IonItem>
+                <IonItem disabled={disSelect}>
                     <IonSelect placeholder="Vehicules" disabled={checkVeh} onIonChange={handleChangeVehicule}>
-                        {props.listVehicules && props.listVehicules.map((i, index)=>{
-                        return (
-                            <Fragment key={index}>
-                                <IonSelectOption value={i}>{`${i.marque} - ${i.prix}€ / jour`}</IonSelectOption>
-                            </Fragment>
-                        )})
+                        {props.listVehicules && props.listVehicules.map((i, index) => {
+                            return (
+                                <Fragment key={index}>
+                                    <IonSelectOption value={i}>{`${i.marque} - ${i.prix}€ / jour`}</IonSelectOption>
+                                </Fragment>
+                            )
+                        })
                         }
 
                     </IonSelect>
-                    <IonButton onClick={handleCheckVeh}  color="success">
+                    <IonButton onClick={handleCheckVeh} color="success">
                         <IonIcon slot="icon-only" icon={checkmark}></IonIcon>
                     </IonButton>
-                    <IonButton onClick={()=> setCheckVeh(false)}  color="danger">
+                    <IonButton onClick={() => setCheckVeh(false)} color="danger">
                         <IonIcon slot="icon-only" icon={closeOutline}></IonIcon>
                     </IonButton>
                 </IonItem>
-                <IonButton expand="block" onClick={handleChangeLocataireEtVehicule}> Valider</IonButton>
 
-                <IonButton color="success" expand="block" onClick={handleAjout}>Ajouter</IonButton>
+                <IonButton disabled={dateDisVal} expand="block" onClick={handleChangeLocataireEtVehicule}> Valider</IonButton>
+
+                <IonList>
+                    <IonItem disabled={dateDis}>
+                        <IonLabel position="floating">Début</IonLabel>
+                        <IonInput type="date"
+                                  onIonChange={handleChangeStart}
+                                  placeholder={"Entrer le début"}></IonInput>
+                    </IonItem>
+                    <IonItem disabled={dateDis}>
+                        <IonLabel position="floating">Fin</IonLabel>
+                        <IonInput type="date"
+                                  onIonChange={handleChangeEnd}
+                                  placeholder={"Entrer la fin"}></IonInput>
+                    </IonItem>
+                </IonList>
+                {dateDis==false?
+                    <IonButton onClick={handleValidationDates}>Valider les Dates</IonButton>:
+                        <IonButton onClick={handleChangeInfo}>Changer Les Informations</IonButton>}
+                <IonButton color="success" expand="block" onClick={handleAjout}>Créer la réservation </IonButton>
             </IonList>
 
 
