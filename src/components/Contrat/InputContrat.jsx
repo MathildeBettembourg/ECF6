@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import {
     IonButton,
     IonIcon,
@@ -183,6 +183,12 @@ export const InputContrat = (props) => {
         setDisSelect(false)
         setDisabledchoixLocVeh(false)
     }
+    const [listVehiculesOk, setListVehiculesOk]=useState([])
+    useEffect(()=>{
+        setListVehiculesOk(props.listVehicules)
+    },[props])
+
+    const [visibilite, setVisibilité] = useState(true)
     return (
         <>
             <IonList>
@@ -208,7 +214,10 @@ export const InputContrat = (props) => {
 
                 <IonItem disabled={disSelect}>
                     <IonSelect placeholder="Vehicules" disabled={checkVeh} onIonChange={handleChangeVehicule}>
-                        {props.listVehicules && props.listVehicules.map((i, index) => {
+
+                        {listVehiculesOk
+                            && listVehiculesOk.filter(listVehiculesOk => listVehiculesOk.disponibilite !== false).map((i, index) => {
+
                             return (
                                 <Fragment key={index}>
                                     <IonSelectOption value={i}>{`${i.marque} - ${i.prix}€ / jour`}</IonSelectOption>

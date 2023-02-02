@@ -62,12 +62,15 @@ export const AffichageContratsPage = () => {
     )
 
     /**
-     * UseEffect ici pour recuperer tous les ocntrats en base de données et les afficher
+     * UseEffect ici pour recuperer tous les contrats en base de données et les afficher
      */
     useEffect(() => {
         serviceContrats.getContrats().then((res) => setContratsList(res))
     }, [])
 
+    /**
+     * UseEffect qui recupere tous les vehicules en base de données et les
+     */
     useEffect(()=>{
         serviceVehicule.getVehicule().then((res)=> setListVehicules(res))
     }, [])
