@@ -11,11 +11,11 @@ import {
     IonToolbar
 } from "@ionic/react";
 import {useParams} from "react-router";
-import {serviceVehicule} from "../service/ServiceVehicule";
-import CardGeneric from "./CardGeneric";
+import {serviceVehicule} from "../../service/ServiceVehicule";
+import CardGeneric from "../../shared/CardGeneric";
 
 
-export const DetailGeneric = () => {
+export const DetailVehicule = () => {
     const {id} = useParams()
 
     const [detailObjectVehicule, setDetailObjectVehicule] = useState(
@@ -69,4 +69,4 @@ export const DetailGeneric = () => {
         </>
     )
 }
-export default DetailGeneric;
+export default DetailVehicule;

@@ -4,30 +4,30 @@ import {IonButton, IonCard, IonContent, IonItem, IonList, IonModal} from "@ionic
 import CardGeneric from "../shared/CardGeneric";
 import SelectGeneric from "../shared/SelectGeneric";
 import InputVehicule from "../components/Vehicule/InputVehicule";
+import {serviceLocataire} from "../service/ServiceLocataire";
 
 
-export const AffichageVehiculesPage = () => {
+export const AffichageLocatairesPages = () => {
     const modal = useRef(null);
     /**
      * DELETEBYID est une fonction pour supprimer les vehicules par leur id
      * @param id
      */
     const deleteById=(id)=>{
-        serviceVehicule.deleteVehiculeById(id)
+        serviceLocataire.deleteLocataireById(id)
     }
 
 
     //Liste de vehicule, initialisée ici car js, cela simplifie l'affichage
-    const [listVehicules, setListVehicules] = useState(
+    const [listLocataires, setListLocataires] = useState(
         [
             {
                 "id": "",
-                "modele": "",
-                "etat": "",
-                "prix": 0,
-                "disponibilite": false,
-                "marque": "",
-                "immatriculation": "",
+               "nom":"",
+               "prenom":"",
+               "dateDeNaissance":"",
+               "email":"",
+                "telephone":""
             }
         ]
     )
@@ -39,16 +39,16 @@ export const AffichageVehiculesPage = () => {
      * par les valeurs en base de données. Cela va ^etre activé à la création du composant eta la modification de la liste
      */
     useEffect(() => {
-        serviceVehicule.getVehicule().then((res) => setListVehicules(res))
-    }, [setVisibilité])
+        serviceLocataire.getLocataires().then((res) => setListLocataires(res))
+    }, [setVisibilité, deleteById])
 
     /**
      * DeleteVehicule est une fonction qui prend en parametre l'id d'un vehicule,
      * il le supprime en base de donnée grâce à l'appel de la fonction de type fetch qui est le service
      * @param id de type string
      */
-    const deleteVehicule = (id) => {
-        serviceVehicule.deleteVehiculeById(id)
+    const deleteLocataire = (id) => {
+        serviceLocataire.deleteLocataireById(id)
     }
 
     /**
@@ -60,53 +60,45 @@ export const AffichageVehiculesPage = () => {
     const handleChangeDispoVisibilite = (value) => {
         setVisibilité(value)
     }
-    const itemSelect = [
-        {"leg": "Disponible", "value": false},
-        {"leg": "Louée", "value": true},
-        {"leg": "Tous", "value": ""}
-    ]
+
 
     /**
      * HandleAjout est la onction pour ajouter une voiture en base de données
      * @param newVehicule de type vehicule
      */
-    const handleAjout=(newVehicule)=>{
-        serviceVehicule.ajouterVehicule(newVehicule)
+    const handleAjout=(newLocataire)=>{
+        serviceLocataire.ajouterLocataire(newLocataire)
     }
-console.log("test")
+
     return (
         <>
-                <IonButton id="open-modal" expand="block">
-            Ajouter une Voiture
-                </IonButton>
-                <IonModal ref={modal} trigger="open-modal" initialBreakpoint={0.75} breakpoints={[0, 0.5, 0.75,1]}>
-                    <IonContent className="ion-padding">
+            <IonButton id="open-modal" expand="block">
+                Ajouter un Locataire
+            </IonButton>
+            <IonModal ref={modal} trigger="open-modal" initialBreakpoint={0.75} breakpoints={[0, 0.5, 0.75,1]}>
+                <IonContent className="ion-padding">
 
 
-                                <InputVehicule handleAjout={handleAjout}/>
+                    <InputVehicule handleAjout={handleAjout}/>
 
-                    </IonContent>
-                </IonModal>
-            <SelectGeneric placeholder={'Louées'}
-                           handleChange={handleChangeDispoVisibilite}
-                           itemSelect={itemSelect}
-            />
+                </IonContent>
+            </IonModal>
+
             {
-                listVehicules
-                && listVehicules.filter(listVehicules => listVehicules.disponibilite !== visibilite).map((i, index) => {
+                listLocataires
+                && listLocataires.map((i, index) => {
 
                     return (
                         <Fragment key={index}>
                             <IonCard>
                                 <CardGeneric i={i}
-                                             type={2}
-                                             titre={i.modele}
+                                             type={1}
+                                             titre={`M. Mme. ${i.nom} ${i.prenom}`}
                                              deleteById={deleteById}
-                                             ssTitre={i.immatriculation}
+                                             ssTitre={`Telephone ${i.telephone}`}
                                              id={i.id}
                                              itemList={[
-                                                 {"leg": "Marque", "value": i.marque},
-                                                 {"leg": "Prix/jours", "value": `${i.prix} euros`}
+                                                  {"leg": "Email", "value": i.email}
                                              ]}
                                 />
                             </IonCard>
@@ -119,4 +111,4 @@ console.log("test")
     )
 
 }
-export default AffichageVehiculesPage;
+export default AffichageLocatairesPages;
