@@ -27,7 +27,7 @@ export const AffichageVehiculesPage = () => {
                 "prix": 0,
                 "disponibilite": false,
                 "marque": "",
-                "immatriculation": "",
+                "immatriculation": ""
             }
         ]
     )

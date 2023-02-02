@@ -41,16 +41,8 @@ export const AffichageLocatairesPages = () => {
      */
     useEffect(() => {
         serviceLocataire.getLocataires().then((res) => setListLocataires(res))
-    }, [setVisibilité, deleteById])
+    }, [setVisibilité])
 
-    /**
-     * DeleteVehicule est une fonction qui prend en parametre l'id d'un vehicule,
-     * il le supprime en base de donnée grâce à l'appel de la fonction de type fetch qui est le service
-     * @param id de type string
-     */
-    const deleteLocataire = (id) => {
-        serviceLocataire.deleteLocataireById(id)
-    }
 
     /**
      * Setting de la valeur du filtre qui est liée au select generique
@@ -70,7 +62,7 @@ export const AffichageLocatairesPages = () => {
     const handleAjout=(newLocataire)=>{
         serviceLocataire.ajouterLocataire(newLocataire)
     }
-
+console.log('test')
     return (
         <>
             <IonButton id="open-modal2" expand="block" color="success">

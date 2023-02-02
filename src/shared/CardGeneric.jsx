@@ -48,12 +48,19 @@ export const CardGeneric = (props) => {
                            expand="block">
                     Détails du Véhicule
                 </IonButton>
-                :
+                :1?
                 <IonButton routerLink={`/DetailLocataires/${props.id}`}
                            color="success"
                            expand="block">
                     Détails du Locataire
                 </IonButton>
+                    :
+                    <IonButton routerLink={`/DetailLocataires/${props.id}`}
+                               color="success"
+                               expand="block">
+                        Détails du Contrat
+                    </IonButton>
+
             }
             <IonButton onClick={deleteById}>Supprimer</IonButton>
             <IonButton>Modifier</IonButton>
