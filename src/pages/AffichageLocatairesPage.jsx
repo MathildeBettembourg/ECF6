@@ -10,6 +10,7 @@ import InputLocataire from "../components/Locataires/InputLocataire";
 
 export const AffichageLocatairesPages = () => {
     const modal2 = useRef(null);
+    const modale3= useRef(null)
     /**
      * DELETEBYID est une fonction pour supprimer les vehicules par leur id
      * @param id
@@ -62,6 +63,10 @@ export const AffichageLocatairesPages = () => {
     const handleAjout=(newLocataire)=>{
         serviceLocataire.ajouterLocataire(newLocataire)
     }
+
+    const modifLocataire =(newLocataire)=>{
+serviceLocataire.modifierLocataire(newLocataire, newLocataire.id)
+    }
 console.log('test')
     return (
         <>
@@ -91,6 +96,19 @@ console.log('test')
                                                   {"leg": "Email", "value": i.email}
                                              ]}
                                 />
+                                <IonButton id={index} expand="block" color="warning" >
+                                    Modifier
+                                </IonButton>
+                                <IonModal ref={modale3} trigger={index} initialBreakpoint={0.75} breakpoints={[0, 0.5, 0.75,1]}>
+                                    <IonContent className="ion-padding">
+
+                                        <InputLocataire handleAjout={modifLocataire}
+                                                       infoLocataire={i}
+
+                                        />
+
+                                    </IonContent>
+                                </IonModal>
                             </IonCard>
                         </Fragment>)
                 })

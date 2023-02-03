@@ -20,5 +20,15 @@ export class ServiceLocataire{
             .then(res=> res.json())
     }
 
+    async modifierLocataire(locataire, id){
+        return await fetch(`http://localhost:8080/locataires/${id}`,
+            {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(locataire)
+            })
+            .then(response => response.json())
+    }
+
 }
 export const serviceLocataire = Object(new ServiceLocataire())

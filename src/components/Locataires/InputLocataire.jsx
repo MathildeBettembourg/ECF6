@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {IonButton, IonList} from "@ionic/react";
 import InputGeneric from "../../shared/InputGeneric";
 
@@ -13,6 +13,10 @@ export const InputLocataire=(props)=> {
             "telephone":""
         }
     )
+    useEffect(()=>{
+        setNewLocataire({...newLocataire, ...props.infoLocataire})
+
+    },[props.infoLocataire])
 
     /**
      * HandleChangeValeur
