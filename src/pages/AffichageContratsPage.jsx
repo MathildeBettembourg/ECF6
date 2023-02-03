@@ -51,8 +51,19 @@ export const AffichageContratsPage = () => {
     )
     const [contratsList, setContratsList] = useState([
             {
-                "locataire": {"id": ""},
-                "vehicule": {"id": ""},
+                "locataire": {"id": "",
+                    "nom": "",
+                    "prenom": "",
+                    "dateDeNaissance": "",
+                    "email": "",
+                    "telephone": ""},
+                "vehicule": {"id": "",
+                    "modele": "",
+                    "etat": "",
+                    "prix": 0,
+                    "disponibilite": false,
+                    "marque": "",
+                    "immatriculation": ""},
                 "prix": 0,
                 "prixLocation": 0,
                 "fullstart": "",
@@ -132,11 +143,12 @@ export const AffichageContratsPage = () => {
                                              type={3}
                                              titre={`${i.fullstart} ${i.fullend}`}
                                     //deleteById={deleteById}
-                                             ssTitre={""}
+                                             ssTitre={i.locataire.nom}
                                              id={i.id}
-                                    // itemList={[
-                                    //     {"leg": "Email", "value": i.email}
-                                    // ]}
+                                     itemList={[
+                                         {"leg": "Contact", "value": i.locataire.telephone},
+                                         {"leg":"IMMATRICULATION", "value": i.vehicule.immatriculation}
+                                     ]}
                                 />
                             </IonCard>
                         </Fragment>)
