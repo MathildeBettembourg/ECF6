@@ -8,6 +8,7 @@ import InputVehicule from "../components/Vehicule/InputVehicule";
 
 export const AffichageVehiculesPage = () => {
     const modal = useRef(null);
+    const modal2 = useRef(null);
     /**
      * DELETEBYID est une fonction pour supprimer les vehicules par leur id
      * @param id
@@ -65,7 +66,9 @@ export const AffichageVehiculesPage = () => {
         {"leg": "Loués", "value": true},
         {"leg": "Tous", "value": ""}
     ]
-
+const modifVehicule=(newVehicule)=>{
+        serviceVehicule.modifierVehicule(newVehicule, newVehicule.id)
+}
     /**
      * HandleAjout est la onction pour ajouter une voiture en base de données
      * @param newVehicule de type vehicule
@@ -109,6 +112,19 @@ console.log("test")
                                                  {"leg": "Prix/jours", "value": `${i.prix} euros`}
                                              ]}
                                 />
+                                <IonButton id={index} expand="block" color="warning" >
+                                    Modifier
+                                </IonButton>
+                                <IonModal ref={modal2} trigger={index} initialBreakpoint={0.75} breakpoints={[0, 0.5, 0.75,1]}>
+                                    <IonContent className="ion-padding">
+
+                                        <InputVehicule handleAjout={modifVehicule}
+                                                       infoVehicule={i}
+
+                                        />
+
+                                    </IonContent>
+                                </IonModal>
                             </IonCard>
                         </Fragment>)
                 })

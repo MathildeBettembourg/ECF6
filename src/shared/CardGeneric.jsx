@@ -63,7 +63,6 @@ export const CardGeneric = (props) => {
 
             }
             <IonButton onClick={deleteById}>Supprimer</IonButton>
-            <IonButton>Modifier</IonButton>
         </IonCardContent>
 
     </>)

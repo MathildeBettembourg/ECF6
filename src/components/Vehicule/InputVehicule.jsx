@@ -15,9 +15,9 @@ export const InputVehicule = (props) => {
             "immatriculation": "",
         }
     )
-    // useEffect(() => {
-    //     serviceVehicule.getVehiculeById(props.id).then((res) => setNewVehicule(res))
-    // }, [props.i])
+    useEffect(() => {
+     setNewVehicule({...newVehicule, ...props.infoVehicule})
+    }, [props.infovehicule])
     //SelectEtat est le tableau pour le composant selectGeneric
     const selectEtat = [
         {"value": "A", "leg": "Très Bon"},
@@ -101,26 +101,26 @@ export const InputVehicule = (props) => {
             {
                 "handleChange": handleChangeModele,
                 "label": "Modele",
-                "placeholder": "Entrer le Model" || newVehicule.modele,
-                "defaultValue": "" || newVehicule.modele
+                "placeholder": newVehicule.modele,
+                "defaultValue": newVehicule.modele
             },
             {
                 "handleChange": handleChangeMarque,
                 "label": "Marque",
-                "placeholder": "Entrer la marque" || newVehicule.marque,
-                "defaultValue": "" || newVehicule.marque
+                "placeholder": newVehicule.marque,
+                "defaultValue":newVehicule.marque
             },
             {
                 "handleChange": handleChangePrix,
                 "label": "Prix",
-                "placeholder": "Entrer le Prix" || newVehicule.prix,
-                "defaultValue": "" || newVehicule.pri
+                "placeholder": newVehicule.prix,
+                "defaultValue": newVehicule.prix
             },
             {
                 "handleChange": handleChangeImmatriculation,
                 "label": "Immatriculation",
-                "placeholder": "Entrer l'immatriculation" || newVehicule.immatriculation,
-                "defaultValue": "" || newVehicule.immatriculation
+                "placeholder":  newVehicule.immatriculation,
+                "defaultValue": newVehicule.immatriculation
             }
         ]
 
